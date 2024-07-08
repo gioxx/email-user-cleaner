@@ -1,0 +1,81 @@
+/*
+email-user-cleaner.css
+GSolone, 2024
+*/
+
+/* Warning & Info box style */
+.euc_warning-box,
+.euc_info-box {
+    background-color: #ffeeba;
+    border: 1px solid #ffc107;
+    color: #856404;
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    max-width: 600px;
+}
+
+.euc_info-box {
+    background-color: #e7f3fe;
+    border: 1px solid #a0cfff;
+    color: #2e74b2;
+}
+
+.euc_info-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.euc_warning-icon {
+    background-color: #ffc107;
+    color: white;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+/* Success & error box style */
+.euc_success-box,
+.euc_error-box {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    max-width: 600px;
+}
+
+.euc_error-box {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.euc_textarea {
+    width: 600px;
+}
+
+.euc_results {
+    margin-top: 10px;
+}
+
+.button-primary.takespace {
+    display: block;
+    margin-top: 10px;
+}
+
+.wrap h2 span.dashicons.dashicons-email-alt {
+    font-size: 35px;
+    padding-right: 10px;
+    margin-right: 10px;
+    vertical-align: top;
+}
