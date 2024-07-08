@@ -3,9 +3,9 @@ Contributors: gioxx
 Tags: maintenance, email, user, cleaning
 Donate link: https://ko-fi.com/gioxx
 Requires at least: 6.0
-Tested up to: 6.5.3
+Tested up to: 6.5.5
 Requires PHP: 7.4
-Stable tag: 1.2
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
