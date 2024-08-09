@@ -1,9 +1,9 @@
 === E-mail User Cleaner ===
 Contributors: gioxx
-Tags: maintenance, email, user, cleaning
+Tags: maintenance, email, user, cleaning, csv
 Donate link: https://ko-fi.com/gioxx
 Requires at least: 6.0
-Tested up to: 6.5.5
+Tested up to: 6.6.1
 Requires PHP: 7.4
 Stable tag: 1.5
 License: GPLv2 or later
@@ -19,3 +19,13 @@ From the E-mail User Cleaner page you will be able to:
 
 == Installation ==
 Install the plugin and activate it. You will find the E-mail User Cleaner entry in the sidebar of your WordPress Administrative Dashboard.
+
+== Screenshots ==
+1. The main screen of the plugin. From here you can export the CSV file containing the complete list of registered users in WordPress or you can specify the email addresses related to the users to be deleted.
+2. A list of e-mail addresses (one address per line) corresponding to users to be deleted in WordPress.
+3. The plugin correctly deleted all users corresponding to the specified e-mail addresses.
+4. The plugin reports that the user corresponding to the administrator's e-mail address has not been deleted for security reasons.
+
+== Changelog ==
+= 1.5 =
+* Initial release published in the WordPress plugin directory.

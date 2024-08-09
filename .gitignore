@@ -3,3 +3,5 @@
 reorganized_fake_users.csv
 subscriber_fake_users.csv
 /.svn
+/tags
+tools/output.csv
