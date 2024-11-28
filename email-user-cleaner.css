@@ -73,7 +73,8 @@ GSolone, 2024
     margin-top: 10px;
 }
 
-.wrap h2 span.dashicons.dashicons-email-alt {
+.wrap h2 span.dashicons.dashicons-email-alt,
+.wrap h2 span.dashicons.dashicons-groups {
     font-size: 35px;
     padding-right: 10px;
     margin-right: 10px;
