@@ -1,0 +1,43 @@
+name: Deploy to WordPress SVN
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  deploy:
+    name: Deploy plugin to WordPress.org
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+
+      - name: Setup SVN
+        run: sudo apt-get install -y subversion
+
+      - name: Checkout WordPress plugin SVN repository
+        env:
+          SVN_REPO: https://plugins.svn.wordpress.org/email-user-cleaner/
+        run: |
+          svn checkout --username ${{ secrets.SVN_USERNAME }} --password ${{ secrets.SVN_PASSWORD }} $SVN_REPO svn
+
+      - name: Copy files to SVN trunk
+        run: |
+          rsync -av --delete --exclude='.github/' --exclude='.git/' --exclude='.gitignore' --exclude='README.md' ./ svn/trunk/
+
+      - name: SVN Add New Files
+        run: |
+          svn add --force svn/trunk/* --auto-props --parents --depth infinity -q
+
+      - name: SVN Commit trunk changes
+        run: |
+          cd svn
+          svn commit -m "Deploying version $GITHUB_REF_NAME" --username ${{ secrets.SVN_USERNAME }} --password ${{ secrets.SVN_PASSWORD }}
+
+      - name: Create SVN tag
+        run: |
+          cd svn
+          svn copy trunk tags/$GITHUB_REF_NAME
+          svn commit -m "Tagging version $GITHUB_REF_NAME" --username ${{ secrets.SVN_USERNAME }} --password ${{ secrets.SVN_PASSWORD }}

@@ -5,7 +5,7 @@ Donate link: https://ko-fi.com/gioxx
 Requires at least: 6.0
 Tested up to: 6.7.1
 Requires PHP: 7.4
-Stable tag: 1.6
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,11 @@ Install the plugin and activate it. You will find the E-mail User Cleaner entry 
 4. The plugin reports that the user corresponding to the administrator's e-mail address has not been deleted for security reasons.
 
 == Changelog ==
+= 1.7 =
+* Updated compatibility with WordPress 6.8.
+* Added DEPLOY.md to this repository (to make life easier for those who need to release an update on GitHub and then SVN WordPress).
+* Migrate SVN release to GitHub Actions.
+
 = 1.6 =
 * You can now identify duplicated users (based on criteria that checks first name, last name and e-mail address) and decide to select and delete them, also referring to the last login date to the WordPress installation.
 * You can use, for your tests, the Python script generateRandomCSV.py (found in the tools folder of the plugin's GitHub repository) which is able to generate CSVs of fake users complete with first name, last name, email address, which you can import into WordPress (test environment) to play around with this plugin and verify that everything is working properly (you can find two ready-made files already, example_include-names.csv and example_simple.csv).
