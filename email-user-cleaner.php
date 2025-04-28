@@ -3,7 +3,7 @@
 Plugin Name:       E-mail User Cleaner
 Plugin URI:        https://go.gioxx.org/emailusercleaner
 Description:       Delete users corresponding to the specified email addresses, but also search for duplicate users.
-Version:           1.7.3
+Version:           1.7.4
 Author:            Gioxx
 Author URI:        https://gioxx.org
 License:           GPL v2 or later
@@ -42,7 +42,7 @@ function euc_enqueue_styles() {
         'euc-styles',
         plugins_url('email-user-cleaner.css', __FILE__),
         array(),
-        '1.7.3'
+        '1.7.4'
     );
 }
 add_action('admin_enqueue_scripts', 'euc_enqueue_styles');
