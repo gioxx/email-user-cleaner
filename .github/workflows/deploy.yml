@@ -16,7 +16,7 @@ jobs:
       - name: WordPress Plugin Deploy
         uses: nk-o/action-wordpress-plugin-deploy@v0.0.5
         with:
-          svn-username: ${{ secrets.SVN_USERNAME }}
-          svn-password: ${{ secrets.SVN_PASSWORD }}
-          slug: email-user-cleaner
-          assets-dir: assets/
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: email-user-cleaner
+          ASSETS_DIR: assets/
