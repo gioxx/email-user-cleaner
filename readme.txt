@@ -31,6 +31,7 @@ Install the plugin and activate it. You will find the E-mail User Cleaner entry 
 = 1.7 =
 * Updated compatibility with WordPress 6.8.
 * Added DEPLOY.md to this repository (to make life easier for those who need to release an update on GitHub and then SVN WordPress).
+* Migrate SVN release to GitHub Actions.
 
 = 1.6 =
 * You can now identify duplicated users (based on criteria that checks first name, last name and e-mail address) and decide to select and delete them, also referring to the last login date to the WordPress installation.
