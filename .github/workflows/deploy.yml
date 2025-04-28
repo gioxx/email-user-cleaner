@@ -18,10 +18,8 @@ jobs:
         run: sudo apt-get install -y subversion
 
       - name: Checkout WordPress plugin SVN repository
-        env:
-          SVN_REPO: https://plugins.svn.wordpress.org/email-user-cleaner/
         run: |
-          svn checkout --username ${{ secrets.SVN_USERNAME }} --password ${{ secrets.SVN_PASSWORD }} $SVN_REPO svn
+          svn checkout https://${{ secrets.SVN_USERNAME }}:${{ secrets.SVN_PASSWORD }}@plugins.svn.wordpress.org/email-user-cleaner/ svn
 
       - name: Copy files to SVN trunk
         run: |
@@ -34,10 +32,10 @@ jobs:
       - name: SVN Commit trunk changes
         run: |
           cd svn
-          svn commit -m "Deploying version $GITHUB_REF_NAME" --username ${{ secrets.SVN_USERNAME }} --password ${{ secrets.SVN_PASSWORD }}
-
+          svn commit -m "Deploying version $GITHUB_REF_NAME"
+        
       - name: Create SVN tag
         run: |
           cd svn
           svn copy trunk tags/$GITHUB_REF_NAME
-          svn commit -m "Tagging version $GITHUB_REF_NAME" --username ${{ secrets.SVN_USERNAME }} --password ${{ secrets.SVN_PASSWORD }}
+          svn commit -m "Tagging version $GITHUB_REF_NAME"
