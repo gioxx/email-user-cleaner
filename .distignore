@@ -1,8 +1,10 @@
 .distignore
 .gitignore
+.wordpress-org
 /.git
 /.github
+/tools
 DEPLOY.md
+LICENSE
 reorganized_fake_users.csv
 subscriber_fake_users.csv
-tools/output.csv
