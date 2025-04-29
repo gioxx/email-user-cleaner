@@ -104,27 +104,27 @@ function euc_admin_page(): void {
 	euc_verify_permissions();
 
 	// Determines which tab is active.
-	$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'delete_users';
+	$active_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'delete_users';
 
 	?>
 	<div class="wrap">
 		<h2 class="nav-tab-wrapper">
 			<!-- Tab for "Delete Users". -->
-			<a href="?page=email-user-cleaner&tab=delete_users" class="nav-tab <?php echo $active_tab === 'delete_users' ? 'nav-tab-active' : ''; ?>">
+			<a href="?page=email-user-cleaner&tab=delete_users" class="nav-tab <?php echo 'delete_users' === $active_tab ? 'nav-tab-active' : ''; ?>">
 				<?php esc_html_e( 'Delete Users', 'email-user-cleaner' ); ?>
 			</a>
 			
 			<!-- Tab for "Find Duplicates". -->
-			<a href="?page=email-user-cleaner&tab=find_duplicates" class="nav-tab <?php echo $active_tab === 'find_duplicates' ? 'nav-tab-active' : ''; ?>">
+			<a href="?page=email-user-cleaner&tab=find_duplicates" class="nav-tab <?php echo 'find_duplicates' === $active_tab ? 'nav-tab-active' : ''; ?>">
 				<?php esc_html_e( 'Find Duplicated Users', 'email-user-cleaner' ); ?>
 			</a>
 		</h2>
 
 		<?php
 		// Page content based on the active tab.
-		if ( $active_tab === 'delete_users' ) {
+		if ( 'delete_users' === $active_tab ) {
 			euc_delete_users_page(); // Show user deletion page.
-		} elseif ( $active_tab === 'find_duplicates' ) {
+		} elseif ( 'find_duplicates' === $active_tab ) {
 			euc_show_duplicates_page(); // Show page to find duplicate users.
 		}
 
@@ -163,7 +163,7 @@ function euc_delete_users_page(): void {
 						<?php
 						echo wp_kses(
 							sprintf(
-                                // Translators: %1$s is the URL to the export page, %2$s is the URL to directly export users.
+								// Translators: %1$s is the URL to the export page, %2$s is the URL to directly export users.
 								__( 'Import and export users and customers detected: <a href="%1$s">Go to export page</a> or <strong>directly export all users from WordPress (in a CSV file) <a href="%2$s">from here</a></strong>.', 'email-user-cleaner' ),
 								esc_url( admin_url( 'tools.php?page=acui&tab=export' ) ),
 								esc_url( admin_url( 'admin.php?action=euc_export_users_csv' ) )
@@ -187,7 +187,7 @@ function euc_delete_users_page(): void {
 						<?php
 						echo wp_kses(
 							sprintf(
-                                // Translators: %s is the URL to export users.
+								// Translators: %s is the URL to export users.
 								__( 'If you want to export all users from WordPress (in a CSV file) <a href="%s">you can click here</a>.', 'email-user-cleaner' ),
 								esc_url( admin_url( 'admin.php?action=euc_export_users_csv' ) )
 							),
@@ -341,7 +341,7 @@ function euc_delete_users(): void {
 		foreach ( $emails_array as $email ) {
 			// Skip if the email matches the current user's email.
 			if ( $email === $current_user_email ) {
-                // Translators: %s is the email address of the current user.
+				// Translators: %s is the email address of the current user.
 				$error_messages[] = sprintf( esc_html__( 'Skipped deleting your own account (%s) for safety.', 'email-user-cleaner' ), $email );
 				continue;
 			}
@@ -351,12 +351,14 @@ function euc_delete_users(): void {
 			if ( $user ) {
 				$deleted = wp_delete_user( $user->ID );
 				if ( $deleted ) {
+                    // Translators: %s is the email address of the user that was successfully deleted.
 					$success_messages[] = sprintf( esc_html__( 'User with email %s successfully deleted!', 'email-user-cleaner' ), $email );
 				} else {
+                    // Translators: %s is the email address of the user that could not be deleted.
 					$error_messages[] = sprintf( esc_html__( 'Error while deleting user with email %s!', 'email-user-cleaner' ), $email );
 				}
 			} else {
-                // Translators: %s is the email address that was not found.
+				// Translators: %s is the email address that was not found.
 				$error_messages[] = sprintf( esc_html__( 'There are no users with email %s!', 'email-user-cleaner' ), $email );
 			}
 		}
@@ -502,10 +504,10 @@ function euc_show_duplicates_page(): void {
 		foreach ( $users_to_delete as $user_id ) {
 			$deleted = wp_delete_user( $user_id );
 			if ( $deleted ) {
-                // Translators: %d is the ID of the user that was successfully deleted.
+				// Translators: %d is the ID of the user that was successfully deleted.
 				echo '<div class="notice notice-success is-dismissible">' . esc_html( sprintf( __( 'User with ID %d successfully deleted.', 'email-user-cleaner' ), $user_id ) ) . '</div>';
 			} else {
-                // Translators: %d is the ID of the user that could not be deleted.
+				// Translators: %d is the ID of the user that could not be deleted.
 				echo '<div class="notice notice-error is-dismissible">' . esc_html( sprintf( __( 'Error deleting user with ID %d.', 'email-user-cleaner' ), $user_id ) ) . '</div>';
 			}
 		}
