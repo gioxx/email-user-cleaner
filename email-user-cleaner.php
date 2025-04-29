@@ -1,13 +1,24 @@
 <?php
 /**
+ * E-mail User Cleaner
+ *
+ * @package           Email_User_Cleaner
+ * @author            Gioxx
+ * @copyright         2024 Gioxx
+ * @license           GPL-2.0-or-later
+ *
+ * @wordpress-plugin
  * Plugin Name:       E-mail User Cleaner
  * Plugin URI:        https://go.gioxx.org/emailusercleaner
  * Description:       Delete users corresponding to the specified email addresses, but also search for duplicate users.
  * Version:           1.7.2
+ * Requires at least: 6.0
+ * Requires PHP:      7.4
  * Author:            Gioxx
  * Author URI:        https://gioxx.org
+ * Text Domain:       email-user-cleaner
  * License:           GPL v2 or later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
 /**
@@ -535,7 +546,7 @@ function euc_find_duplicate_users(): array {
             $email_map[$user_email] = [$user];
         }
 
-        // Check for duplicates by full name
+        // Check for duplicates by full name.
         $full_name = strtolower(trim($user->first_name . ' ' . $user->last_name));
         if (isset($name_map[$full_name])) {
             // If full name already exists in the map, add this user to the existing array.
