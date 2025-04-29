@@ -24,7 +24,7 @@ function euc_admin_menu(): void {
         'E-mail User Cleaner',
         'manage_options',
         'email-user-cleaner',
-        'euc_admin_page', // Show the main page with navigation tabs
+        'euc_admin_page', // Show the main page with navigation tabs.
         'dashicons-superhero'
     );
 }
@@ -57,7 +57,7 @@ function euc_render_footer(): void {
     ?>
     <div class="footer" style="padding-top: 35px;">
         <hr>
-        <span class="dashicons dashicons-hammer"></span> Gioxx, <?php echo esc_html(date('Y')); ?> &#x2022; 
+        <span class="dashicons dashicons-hammer"></span> Gioxx, <?php echo esc_html(gmdate('Y')); ?> &#x2022; 
         <span class="dashicons dashicons-admin-home"></span> 
         <a href="<?php echo esc_url('https://go.gioxx.org/emailusercleaner'); ?>">Gioxx.org</a> &#x2022; 
         <span class="dashicons dashicons-media-code"></span> 
@@ -81,33 +81,33 @@ function euc_verify_permissions(): void {
     }
 }
 
-// Show the plugin page
+// Show the plugin page.
 function euc_admin_page(): void {
     euc_verify_permissions();
 
-    // Determines which tab is active
+    // Determines which tab is active.
     $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'delete_users';
 
     ?>
     <div class="wrap">
         <h2 class="nav-tab-wrapper">
-            <!-- Tab for "Delete Users" -->
+            <!-- Tab for "Delete Users". -->
             <a href="?page=email-user-cleaner&tab=delete_users" class="nav-tab <?php echo $active_tab === 'delete_users' ? 'nav-tab-active' : ''; ?>">
                 <?php esc_html_e('Delete Users', 'email-user-cleaner'); ?>
             </a>
             
-            <!-- Tab for "Find Duplicates" -->
+            <!-- Tab for "Find Duplicates". -->
             <a href="?page=email-user-cleaner&tab=find_duplicates" class="nav-tab <?php echo $active_tab === 'find_duplicates' ? 'nav-tab-active' : ''; ?>">
                 <?php esc_html_e('Find Duplicated Users', 'email-user-cleaner'); ?>
             </a>
         </h2>
 
         <?php
-        // Page content based on the active tab
+        // Page content based on the active tab.
         if ($active_tab === 'delete_users') {
-            euc_delete_users_page(); // Show user deletion page
+            euc_delete_users_page(); // Show user deletion page.
         } elseif ($active_tab === 'find_duplicates') {
-            euc_show_duplicates_page(); // Show page to find duplicate users
+            euc_show_duplicates_page(); // Show page to find duplicate users.
         }
 
         euc_render_footer();
@@ -136,7 +136,7 @@ function euc_delete_users_page(): void {
         <h2><span class="dashicons dashicons-email-alt"></span> <?php echo esc_html($plugin_name); ?></h2>
 
         <?php
-            // Check plugin Import and export users and customers
+            // Check plugin Import and export users and customers.
             if (is_plugin_active('import-users-from-csv-with-meta/import-users-from-csv-with-meta.php')) { ?>
                 <div class="euc_info-box">
                     <div class="euc_info-icon">ℹ️</div>
@@ -191,7 +191,7 @@ function euc_delete_users_page(): void {
 
             <p class="euc_results">
                 <?php
-                    // Messages output
+                    // Messages output.
                     euc_delete_users();
                 ?>
             </p>
@@ -214,7 +214,7 @@ function euc_delete_users_page(): void {
     <?php
 }
 
-// Export all users in a CSV file
+// Export all users in a CSV file.
 function euc_export_users_csv(): void {
     euc_verify_permissions();
 
@@ -228,75 +228,75 @@ function euc_export_users_csv(): void {
         __('Last Name', 'email-user-cleaner')
     );
 
-    // Get all WordPress users
+    // Get all WordPress users.
     $users = get_users();
 
     $csv_content = '';
     $csv_content .= '"' . implode('","', array_map('esc_html', $csv_header)) . '"' . "\n";
 
-    // Cycle over all users and add their information to the contents of the CSV file
+    // Cycle over all users and add their information to the contents of the CSV file.
     foreach ($users as $user) {
         $user_info = array(
-            sanitize_user($user->user_login), // user_login
-            sanitize_email($user->user_email), // user_email
-            sanitize_text_field($user->display_name), // display_name
-            sanitize_text_field(implode(', ', $user->roles)), // roles
-            sanitize_text_field(get_user_meta($user->ID, 'first_name', true)), // first_name
-            sanitize_text_field(get_user_meta($user->ID, 'last_name', true)) // last_name
+            sanitize_user($user->user_login), // user_login.
+            sanitize_email($user->user_email), // user_email.
+            sanitize_text_field($user->display_name), // display_name.
+            sanitize_text_field(implode(', ', $user->roles)), // roles.
+            sanitize_text_field(get_user_meta($user->ID, 'first_name', true)), // first_name.
+            sanitize_text_field(get_user_meta($user->ID, 'last_name', true)) // last_name.
         );
         $csv_content .= '"' . implode('","', array_map('esc_html', $user_info)) . '"' . "\n";
     }
 
-    // Send HTTP header to indicate that you are sending a CSV file
+    // Send HTTP header to indicate that you are sending a CSV file.
     header('Content-Type: text/csv');
     header('Content-Disposition: attachment; filename=wp_users_export.csv');
     
-    // Output the CSV content
+    // Output the CSV content.
     echo wp_kses_post($csv_content);
     exit;
 }
 
-// Manage user deletion
+// Manage user deletion.
 function euc_delete_users(): void {
     if (isset($_POST['submit'])) {
-        // Verify nonce
+        // Verify nonce.
         if (!check_admin_referer('euc_delete_users_nonce')) {
             wp_die(esc_html__('Security check failed. Please try again.', 'email-user-cleaner'));
         }
         
-        // Verify that the user has the necessary permissions
+        // Verify that the user has the necessary permissions.
         euc_verify_permissions();
         
-        // Get email addresses specified
+        // Get email addresses specified.
         $emails = isset($_POST['emails']) ? sanitize_textarea_field($_POST['emails']) : '';
 
-        // Split email addresses into an array
+        // Split email addresses into an array.
         $emails_array = array_map('trim', explode("\n", $emails));
         $emails_array = array_filter($emails_array, function ($email) {
             $sanitized_email = sanitize_email($email);
             return is_email($sanitized_email) ? $sanitized_email : false;
         });
 
-        // Avoid duplicates
+        // Avoid duplicates.
         $emails_array = array_unique($emails_array);
 
-        // Get current user's email
+        // Get current user's email.
         $current_user = wp_get_current_user();
         $current_user_email = $current_user->user_email;
 
-        // Output messages
+        // Output messages.
         $success_messages = [];
         $error_messages = [];
 
-        // Cycles over email addresses and deletes matching users
+        // Cycles over email addresses and deletes matching users.
         foreach ($emails_array as $email) {
-            // Skip if the email matches the current user's email
+            // Skip if the email matches the current user's email.
             if ($email === $current_user_email) {
                 $error_messages[] = sprintf(esc_html__('Skipped deleting your own account (%s) for safety.', 'email-user-cleaner'), $email);
                 continue;
             }
 
-            // Checks that the email is valid and belongs to a user
+            // Checks that the email is valid and belongs to a user.
             $user = get_user_by('email', $email);
             if ($user) {
                 $deleted = wp_delete_user($user->ID);
@@ -311,7 +311,7 @@ function euc_delete_users(): void {
         }
 
 
-        // Messages output
+        // Messages output.
         if (!empty($success_messages)) {
             echo '<div class="notice notice-success is-dismissible">';
             foreach ($success_messages as $message) {
@@ -343,13 +343,13 @@ function euc_save_last_login($user_login, $user): void {
 }
 add_action('wp_login', 'euc_save_last_login', 10, 2);
 
-// Function to identify duplicated users
+// Function to identify duplicated users.
 function euc_show_duplicates_page(): void {
-    // Verify if the current user has permission to view this page
+    // Verify if the current user has permission to view this page.
     euc_verify_permissions();
 
-    // Retrieve duplicate users
-    $duplicates = euc_find_duplicate_users(); // This function should be defined elsewhere to find duplicates
+    // Retrieve duplicate users.
+    $duplicates = euc_find_duplicate_users(); // This function should be defined elsewhere to find duplicates.
 
     ?>
     <div class="wrap">
@@ -382,10 +382,10 @@ function euc_show_duplicates_page(): void {
                         <?php foreach ($duplicates as $duplicate_group) : ?>
                             <?php foreach ($duplicate_group['users'] as $user) : ?>
                                 <?php 
-                                // Retrieve the last login time from user meta
+                                // Retrieve the last login time from user meta.
                                 $last_login = get_user_meta($user->ID, 'last_login', true);
                                 
-                                // Format the last login date if available
+                                // Format the last login date if available.
                                 $last_login_display = !empty($last_login) ? date('Y-m-d H:i:s', strtotime($last_login)) : __('Never logged in', 'email-user-cleaner');
                                 ?>
                                 <tr>
@@ -396,7 +396,7 @@ function euc_show_duplicates_page(): void {
                                     <td><?php echo esc_html($user->user_email); ?></td>
                                     <td><?php echo esc_html($user->first_name . ' ' . $user->last_name); ?></td>
                                     <td><?php echo esc_html($duplicate_group['criteria']); ?></td>
-                                    <td><?php echo esc_html($last_login_display); ?></td> <!-- Display last login -->
+                                    <td><?php echo esc_html($last_login_display); ?></td> <!-- Display last login. -->
                                 </tr>
                             <?php endforeach; ?>
                             <tr><td colspan="6"><hr></td></tr>
@@ -428,20 +428,20 @@ function euc_show_duplicates_page(): void {
     </script>
 
     <?php
-    // Handle the deletion of selected users
+    // Handle the deletion of selected users.
     if (isset($_POST['delete_selected'])) {
         // Verify nonce
         if (!check_admin_referer('euc_delete_duplicates_nonce')) {
             wp_die(esc_html__('Security check failed. Please try again.', 'email-user-cleaner'));
         }
 
-        // Verify that the user has the necessary permissions
+        // Verify that the user has the necessary permissions.
         euc_verify_permissions();
 
-        // Get the IDs of the users to delete
+        // Get the IDs of the users to delete.
         $users_to_delete = isset($_POST['users_to_delete']) ? array_map('intval', $_POST['users_to_delete']) : [];
 
-        // Delete selected users
+        // Delete selected users.
         foreach ($users_to_delete as $user_id) {
             $deleted = wp_delete_user($user_id);
             if ($deleted) {
@@ -462,9 +462,9 @@ function euc_show_duplicates_page(): void {
  */
 function add_duplicates_to_list(array $map, string $criteria, array &$duplicates): void {
     foreach ($map as $key => $users_with_same_key) {
-        // Check if there are multiple users with the same key (e.g., email or full name)
+        // Check if there are multiple users with the same key (e.g., email or full name).
         if (count($users_with_same_key) > 1) {
-            // Add these users to the duplicates list with the appropriate criteria
+            // Add these users to the duplicates list with the appropriate criteria.
             $duplicates[] = [
                 'criteria' => $criteria,
                 'users' => $users_with_same_key
@@ -473,42 +473,42 @@ function add_duplicates_to_list(array $map, string $criteria, array &$duplicates
     }
 }
 
-// Main function to find duplicate users based on different criteria
+// Main function to find duplicate users based on different criteria.
 function euc_find_duplicate_users(): array {
     $users = get_users();
     $duplicates = [];
     $email_map = [];
     $name_map = [];
 
-    // Find duplicates based on email and full names in a single loop
+    // Find duplicates based on email and full names in a single loop.
     foreach ($users as $user) {
-        // Check for duplicates by email
+        // Check for duplicates by email.
         $user_email = $user->user_email;
         if (isset($email_map[$user_email])) {
-            // If email already exists in the map, add this user to the existing array
+            // If email already exists in the map, add this user to the existing array.
             $email_map[$user_email][] = $user;
         } else {
-            // Otherwise, create a new array with this user
+            // Otherwise, create a new array with this user.
             $email_map[$user_email] = [$user];
         }
 
         // Check for duplicates by full name
         $full_name = strtolower(trim($user->first_name . ' ' . $user->last_name));
         if (isset($name_map[$full_name])) {
-            // If full name already exists in the map, add this user to the existing array
+            // If full name already exists in the map, add this user to the existing array.
             $name_map[$full_name][] = $user;
         } else {
-            // Otherwise, create a new array with this user
+            // Otherwise, create a new array with this user.
             $name_map[$full_name] = [$user];
         }
     }
 
-    // Use the helper function to add duplicate users to the final duplicates list
+    // Use the helper function to add duplicate users to the final duplicates list.
     add_duplicates_to_list($email_map, 'Email', $duplicates);
     add_duplicates_to_list($name_map, 'Full Name', $duplicates);
 
     return $duplicates;
 }
 
-// Add user deletion function to admin_init hook
+// Add user deletion function to admin_init hook.
 add_action('admin_action_euc_export_users_csv', 'euc_export_users_csv');
