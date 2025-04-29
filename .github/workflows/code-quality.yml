@@ -29,7 +29,7 @@ jobs:
 
     - name: Run PHPCBF (even if errors remain)
       continue-on-error: true
-      run: vendor/bin/phpcbf
+      run: vendor/bin/phpcbf --standard=.phpcs.xml.dist
 
     - name: Generate PHPCS report
       continue-on-error: true
