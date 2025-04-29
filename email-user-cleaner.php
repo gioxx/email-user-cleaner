@@ -104,7 +104,8 @@ function euc_admin_page(): void {
 	euc_verify_permissions();
 
 	// Determines which tab is active.
-	$active_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'delete_users';
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only reading 'tab' parameter for UI navigation, safe.
+    $active_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'delete_users';
 
 	?>
 	<div class="wrap">
@@ -351,10 +352,10 @@ function euc_delete_users(): void {
 			if ( $user ) {
 				$deleted = wp_delete_user( $user->ID );
 				if ( $deleted ) {
-                    // Translators: %s is the email address of the user that was successfully deleted.
+					// Translators: %s is the email address of the user that was successfully deleted.
 					$success_messages[] = sprintf( esc_html__( 'User with email %s successfully deleted!', 'email-user-cleaner' ), $email );
 				} else {
-                    // Translators: %s is the email address of the user that could not be deleted.
+					// Translators: %s is the email address of the user that could not be deleted.
 					$error_messages[] = sprintf( esc_html__( 'Error while deleting user with email %s!', 'email-user-cleaner' ), $email );
 				}
 			} else {
