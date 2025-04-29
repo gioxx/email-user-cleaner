@@ -41,3 +41,22 @@ function sanitize_text_field($text) { return $text; }
 function sanitize_textarea_field($text) { return $text; }
 function sanitize_user($username) { return $username; }
 function is_email($email) { return (bool) filter_var($email, FILTER_VALIDATE_EMAIL); }
+
+
+if (!function_exists('esc_html__')) {
+    function esc_html__($text, $domain = 'default') {
+        return $text;
+    }
+}
+
+if (!function_exists('esc_html_e')) {
+    function esc_html_e($text, $domain = 'default') {
+        echo $text;
+    }
+}
+
+if (!function_exists('wp_die')) {
+    function wp_die($message = '') {
+        exit;
+    }
+}
