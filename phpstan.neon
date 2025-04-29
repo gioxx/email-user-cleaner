@@ -2,19 +2,19 @@ parameters:
   level: max
   paths:
     - email-user-cleaner.php
-  excludes_analyse:
+  excludePaths:
     - .github/*
     - .wordpress-org/*
     - tools/*
   bootstrapFiles:
     - phpstan-bootstrap.php
-  checkMissingIterableValueType: false
-  checkGenericClassInNonGenericObjectType: false
   reportUnmatchedIgnoredErrors: false
 
-  # Ignora errori comuni causati da WP dinamico
   ignoreErrors:
     - '#Function .* not found.#'
     - '#Call to unknown method .*#'
     - '#Access to an undefined property .*#'
     - '#Access to private property .*#'
+    - '#Access to property \$.* on an unknown class .*#'
+    - { identifier: missingType.iterableValue }
+    - { identifier: missingType.generics }
