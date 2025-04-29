@@ -31,11 +31,13 @@ jobs:
       continue-on-error: true
       run: vendor/bin/phpcbf --standard=.phpcs.xml.dist
 
-    - name: Generate PHPCS report
+    - name: Generate PHPCS XML report
       continue-on-error: true
-      run: |
-        vendor/bin/phpcs --standard=.phpcs.xml.dist --report=checkstyle --report-file=phpcs-report.xml
-        php vendor/bin/phpcs-html-report-generator.php
+      run: vendor/bin/phpcs --standard=.phpcs.xml.dist --report=checkstyle --report-file=phpcs-report.xml
+
+    - name: Generate readable PHPCS HTML report
+      continue-on-error: true
+      run: php .github/phpcs-html-report-generator.php
 
     - name: Upload PHPCS HTML report
       uses: actions/upload-artifact@v4
