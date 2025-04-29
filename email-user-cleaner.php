@@ -105,7 +105,7 @@ function euc_admin_page(): void {
 
 	// Determines which tab is active.
 	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only reading 'tab' parameter for UI navigation, safe.
-    $active_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'delete_users';
+	$active_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'delete_users';
 
 	?>
 	<div class="wrap">
