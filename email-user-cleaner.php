@@ -3,7 +3,7 @@
 Plugin Name:       E-mail User Cleaner
 Plugin URI:        https://go.gioxx.org/emailusercleaner
 Description:       Delete users corresponding to the specified email addresses, but also search for duplicate users.
-Version:           1.7.1
+Version:           1.7.2
 Author:            Gioxx
 Author URI:        https://gioxx.org
 License:           GPL v2 or later
@@ -18,7 +18,7 @@ License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @since 1.5
  */
-function euc_admin_menu() {
+function euc_admin_menu(): void {
     add_menu_page(
         'E-mail User Cleaner',
         'E-mail User Cleaner',
@@ -37,12 +37,12 @@ add_action('admin_menu', 'euc_admin_menu');
  *
  * @since 1.5
  */
-function euc_enqueue_styles() {
+function euc_enqueue_styles(): void {
     wp_enqueue_style(
         'euc-styles',
         plugins_url('email-user-cleaner.css', __FILE__),
         array(),
-        '1.7.1'
+        '1.7.2'
     );
 }
 add_action('admin_enqueue_scripts', 'euc_enqueue_styles');
@@ -53,7 +53,7 @@ add_action('admin_enqueue_scripts', 'euc_enqueue_styles');
  * This footer includes styled dashicons, the current year, and links to Gioxx.org
  * and the plugin's GitHub repository.
  */
-function euc_render_footer() {
+function euc_render_footer(): void {
     ?>
     <div class="footer" style="padding-top: 35px;">
         <hr>
@@ -75,14 +75,14 @@ function euc_render_footer() {
  *
  * @since 1.5
  */
-function euc_verify_permissions() {
+function euc_verify_permissions(): void {
     if (!current_user_can('manage_options')) {
         wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'email-user-cleaner'), 403);
     }
 }
 
 // Show the plugin page
-function euc_admin_page() {
+function euc_admin_page(): void {
     euc_verify_permissions();
 
     // Determines which tab is active
@@ -124,7 +124,7 @@ function euc_admin_page() {
  *
  * @since 1.0
  */
-function euc_delete_users_page() {
+function euc_delete_users_page(): void {
     euc_verify_permissions();
     
     $plugin_data = get_plugin_data(__FILE__);
@@ -215,7 +215,7 @@ function euc_delete_users_page() {
 }
 
 // Export all users in a CSV file
-function euc_export_users_csv() {
+function euc_export_users_csv(): void {
     euc_verify_permissions();
 
     // Sets the header of the CSV file.
@@ -257,7 +257,7 @@ function euc_export_users_csv() {
 }
 
 // Manage user deletion
-function euc_delete_users() {
+function euc_delete_users(): void {
     if (isset($_POST['submit'])) {
         // Verify nonce
         if (!check_admin_referer('euc_delete_users_nonce')) {
@@ -338,13 +338,13 @@ function euc_delete_users() {
  * @param string $user_login The user login.
  * @param WP_User $user WP_User object.
  */
-function euc_save_last_login($user_login, $user) {
+function euc_save_last_login($user_login, $user): void {
     update_user_meta($user->ID, 'last_login', current_time('mysql'));
 }
 add_action('wp_login', 'euc_save_last_login', 10, 2);
 
 // Function to identify duplicated users
-function euc_show_duplicates_page() {
+function euc_show_duplicates_page(): void {
     // Verify if the current user has permission to view this page
     euc_verify_permissions();
 
@@ -454,7 +454,7 @@ function euc_show_duplicates_page() {
 }
 
 // Helper function to add duplicates to the duplicates list
-function add_duplicates_to_list($map, $criteria, &$duplicates) {
+function add_duplicates_to_list($map, $criteria, &$duplicates): void {
     foreach ($map as $key => $users_with_same_key) {
         // Check if there are multiple users with the same key (e.g., email or full name)
         if (count($users_with_same_key) > 1) {
@@ -468,7 +468,7 @@ function add_duplicates_to_list($map, $criteria, &$duplicates) {
 }
 
 // Main function to find duplicate users based on different criteria
-function euc_find_duplicate_users() {
+function euc_find_duplicate_users(): array {
     $users = get_users();
     $duplicates = [];
     $email_map = [];
