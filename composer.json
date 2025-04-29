@@ -24,6 +24,6 @@
         "lint": "vendor/bin/phpcs",
         "fix": "vendor/bin/phpcbf",
         "analyse": "vendor/bin/phpstan analyse --memory-limit=512M",
-        "report": "vendor/bin/phpcs --report=full --report-file=phpcs-report.html --ignore=vendor/*"
+        "report": "vendor/bin/phpcs --report=full --report-file=phpcs-report.html"
     }
 }
