@@ -27,9 +27,23 @@ jobs:
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse --memory-limit=512M
 
-    # - name: Run PHPCBF (even if errors remain)
-    #   continue-on-error: true
-    #   run: vendor/bin/phpcbf --standard=.phpcs.xml.dist
+    - name: Run PHPCBF (even if errors remain)
+      continue-on-error: true
+      run: vendor/bin/phpcbf --standard=.phpcs.xml.dist
+
+    - name: Prepare Fixed PHP Files Archive
+      run: |
+        mkdir fixed-php
+        find . -type f -name '*.php' -not -path './vendor/*' -not -path './fixed-php/*' -exec cp --parents {} fixed-php/ \;
+        cd fixed-php
+        zip -r ../fixed-php.zip .
+        cd ..
+
+    - name: Upload Fixed PHP Files
+      uses: actions/upload-artifact@v4
+      with:
+        name: fixed-php
+        path: fixed-php.zip
 
     - name: Generate PHPCS XML report
       continue-on-error: true
