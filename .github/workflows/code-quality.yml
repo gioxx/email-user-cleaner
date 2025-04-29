@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   code_quality:
@@ -27,5 +27,17 @@ jobs:
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse --memory-limit=512M
 
-    - name: Run PHPCS (WordPress Coding Standards)
-      run: vendor/bin/phpcs -s
+    - name: Run PHPCBF (fix coding standards)
+      run: vendor/bin/phpcbf
+
+    - name: Commit and Push if PHP Code Beautifier made changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        if [[ `git status --porcelain` ]]; then
+          git add .
+          git commit -m "Fix coding style issues via phpcbf"
+          git push
+        else
+          echo "No changes to commit."
+        fi
