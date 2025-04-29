@@ -1,14 +1,14 @@
 <?php
-/*
-Plugin Name:       E-mail User Cleaner
-Plugin URI:        https://go.gioxx.org/emailusercleaner
-Description:       Delete users corresponding to the specified email addresses, but also search for duplicate users.
-Version:           1.7.2
-Author:            Gioxx
-Author URI:        https://gioxx.org
-License:           GPL v2 or later
-License URI:       https://www.gnu.org/licenses/gpl-2.0.html
-*/
+/**
+ * Plugin Name:       E-mail User Cleaner
+ * Plugin URI:        https://go.gioxx.org/emailusercleaner
+ * Description:       Delete users corresponding to the specified email addresses, but also search for duplicate users.
+ * Version:           1.7.2
+ * Author:            Gioxx
+ * Author URI:        https://gioxx.org
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 /**
  * Add the plugin to the WordPress admin menu.
@@ -81,7 +81,14 @@ function euc_verify_permissions(): void {
     }
 }
 
-// Show the plugin page.
+/**
+ * Shows the plugin page.
+ *
+ * This function renders the plugin's main page, including navigation tabs and
+ * page content based on the active tab.
+ *
+ * @since 1.5
+ */
 function euc_admin_page(): void {
     euc_verify_permissions();
 
@@ -214,7 +221,20 @@ function euc_delete_users_page(): void {
     <?php
 }
 
-// Export all users in a CSV file.
+/**
+ * Export all WordPress users to a CSV file.
+ *
+ * This function verifies the current user's permissions and compiles
+ * a list of all registered WordPress users with their details, including
+ * user login, email, display name, role, first name, and last name. The
+ * data is then formatted as a CSV file and sent to the browser for download.
+ *
+ * It sets the appropriate HTTP headers to prompt the browser to download
+ * the generated CSV file. The CSV file includes a header row followed by
+ * user data rows.
+ *
+ * @since 1.0
+ */
 function euc_export_users_csv(): void {
     euc_verify_permissions();
 
@@ -256,7 +276,15 @@ function euc_export_users_csv(): void {
     exit;
 }
 
-// Manage user deletion.
+/**
+ * Deletes users by specifying their email addresses.
+ *
+ * This function verifies the current user's permissions, processes the specified
+ * email addresses, and deletes the corresponding users. It also outputs success
+ * and error messages based on the outcome of the deletion operation.
+ *
+ * @since 1.0
+ */
 function euc_delete_users(): void {
     if (isset($_POST['submit'])) {
         // Verify nonce.
@@ -343,7 +371,14 @@ function euc_save_last_login($user_login, $user): void {
 }
 add_action('wp_login', 'euc_save_last_login', 10, 2);
 
-// Function to identify duplicated users.
+/**
+ * Shows the page to find duplicate users.
+ *
+ * This function renders the page to find duplicate users, including a table
+ * with the duplicated users and a button to delete selected users.
+ *
+ * @since 1.5
+ */
 function euc_show_duplicates_page(): void {
     // Verify if the current user has permission to view this page.
     euc_verify_permissions();
@@ -473,7 +508,15 @@ function add_duplicates_to_list(array $map, string $criteria, array &$duplicates
     }
 }
 
-// Main function to find duplicate users based on different criteria.
+/**
+ * Finds duplicate users based on email and full names.
+ *
+ * This function finds duplicates among all WordPress users based on their email and full names.
+ * It returns an array of arrays, with each sub-array containing users with the same criteria.
+ * The criteria is described in the 'criteria' key of each sub-array.
+ *
+ * @return array Array of arrays, with each sub-array containing users with the same criteria.
+ */
 function euc_find_duplicate_users(): array {
     $users = get_users();
     $duplicates = [];
