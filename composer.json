@@ -16,10 +16,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs"
+            "phpcs --config-set installed_paths vendor/phpcsstandards/phpcsextra,vendor/phpcsstandards/phpcsutils,vendor/wp-coding-standards/wpcs"
         ],
         "post-update-cmd": [
-            "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs"
+            "phpcs --config-set installed_paths vendor/phpcsstandards/phpcsextra,vendor/phpcsstandards/phpcsutils,vendor/wp-coding-standards/wpcs"
         ],
         "lint": "vendor/bin/phpcs",
         "fix": "vendor/bin/phpcbf",
