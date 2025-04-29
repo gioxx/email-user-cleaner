@@ -453,8 +453,14 @@ function euc_show_duplicates_page(): void {
     }
 }
 
-// Helper function to add duplicates to the duplicates list
-function add_duplicates_to_list($map, $criteria, &$duplicates): void {
+/**
+ * Helper function to add duplicate users to the duplicates list.
+ *
+ * @param array $map Map of duplicates based on a specific criteria (e.g., email or full name).
+ * @param string $criteria Criteria by which duplicates are determined.
+ * @param array $duplicates Reference to the array where duplicates are collected.
+ */
+function add_duplicates_to_list(array $map, string $criteria, array &$duplicates): void {
     foreach ($map as $key => $users_with_same_key) {
         // Check if there are multiple users with the same key (e.g., email or full name)
         if (count($users_with_same_key) > 1) {
