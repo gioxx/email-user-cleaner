@@ -34,7 +34,7 @@ jobs:
     - name: Generate PHPCS report
       continue-on-error: true
       run: |
-        vendor/bin/phpcs --report=checkstyle --report-file=phpcs-report.xml
+        vendor/bin/phpcs --standard=.phpcs.xml.dist --report=checkstyle --report-file=phpcs-report.xml
         php vendor/bin/phpcs-html-report-generator.php
 
     - name: Upload PHPCS HTML report
