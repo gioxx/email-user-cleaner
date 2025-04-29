@@ -2,6 +2,7 @@
 .gitignore
 /.git
 /.github
+DEPLOY.md
 reorganized_fake_users.csv
 subscriber_fake_users.csv
 tools/output.csv
