@@ -1,5 +1,6 @@
 .distignore
 .gitignore
+.phpcs.xml.dist
 .wordpress-org
 /.git
 /.github
@@ -7,6 +8,7 @@
 composer.json
 DEPLOY.md
 LICENSE
+phpcs-html-report-generator.php
 phpcs.xml
 phpstan-bootstrap.php
 phpstan.neon
