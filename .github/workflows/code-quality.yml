@@ -27,9 +27,9 @@ jobs:
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse --memory-limit=512M
 
-    - name: Run PHPCBF (even if errors remain)
-      continue-on-error: true
-      run: vendor/bin/phpcbf --standard=.phpcs.xml.dist
+    # - name: Run PHPCBF (even if errors remain)
+    #   continue-on-error: true
+    #   run: vendor/bin/phpcbf --standard=.phpcs.xml.dist
 
     - name: Generate PHPCS XML report
       continue-on-error: true
