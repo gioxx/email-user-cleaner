@@ -38,7 +38,7 @@ function esc_url($string) { return $string; }
 function esc_url_raw($string) { return $string; }
 function wp_kses($string, $allowed_html = [], $allowed_protocols = []) { return $string; }
 function wp_kses_post($string) { return $string; }
-function wp_die($message = '') { die($message); }
+function wp_die($message = '', $title = '') { die($message); }
 
 function __($string, $domain = 'default') { return $string; }
 function _e($string, $domain = 'default') { echo $string; }
