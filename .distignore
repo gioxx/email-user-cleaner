@@ -3,7 +3,6 @@
 .wordpress-org
 /.git
 /.github
-/assets
 /tools
 DEPLOY.md
 LICENSE
