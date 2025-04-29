@@ -27,7 +27,8 @@ jobs:
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse --memory-limit=512M
 
-    - name: Run PHPCBF (auto-fix)
+    - name: Run PHPCBF even if errors remain
+      continue-on-error: true
       run: vendor/bin/phpcbf --ignore=vendor/*
 
     - name: Generate PHPCS HTML Report
@@ -38,3 +39,18 @@ jobs:
       with:
         name: phpcs-report
         path: phpcs-report.html
+
+    - name: Get PR number
+      if: github.event_name == 'pull_request'
+      run: echo "PR_NUMBER=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
+
+    - name: Comment with link to PHPCS report
+      if: github.event_name == 'pull_request'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: phpcs-report
+        message: |
+          :mag: **PHP CodeSniffer Report**: Requires review  
+          Download [phpcs-report.html](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) available in "Artifacts".
+
+
