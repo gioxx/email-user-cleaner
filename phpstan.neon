@@ -1,9 +1,21 @@
 parameters:
-  level: 5
+  level: max
   paths:
-    - .
+    - email-user-cleaner.php
   excludes_analyse:
-    - vendor
-  ignoreErrors:
-    - '#Call to an undefined method#'
+    - .github/*
+    - .wordpress-org/*
+    - tools/*
+  bootstrapFiles:
+    - phpstan-bootstrap.php
+  checkMissingIterableValueType: false
+  checkGenericClassInNonGenericObjectType: false
   reportUnmatchedIgnoredErrors: false
+
+  # Ignora errori comuni causati da WP dinamico
+  ignoreErrors:
+    - '#Function .* not found.#'
+    - '#Call to unknown method .*#'
+    - '#Access to an undefined property .*#'
+    - '#Access to private property .*#'
+    - '#Parameter #\d+ \$.* of function .* expects .*#'

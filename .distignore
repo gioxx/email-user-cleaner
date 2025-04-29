@@ -8,6 +8,7 @@ composer.json
 DEPLOY.md
 LICENSE
 phpcs.xml
+phpstan-bootstrap.php
 phpstan.neon
 reorganized_fake_users.csv
 subscriber_fake_users.csv
