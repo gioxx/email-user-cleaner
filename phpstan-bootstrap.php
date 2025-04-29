@@ -1,5 +1,12 @@
 <?php
 
+// Simulate WP_User class
+if (!class_exists('WP_User')) {
+    class WP_User {
+        public int $ID = 1;
+    }
+}
+
 // Basic WordPress function mocks for static analysis with PHPStan.
 
 function add_action(...$args) {}
@@ -10,7 +17,7 @@ function get_user_meta(...$args) { return ''; }
 function get_user_by(...$args) { return false; }
 function update_user_meta(...$args) {}
 function delete_user_meta(...$args) {}
-function wp_get_current_user() { return (object)['ID' => 1]; }
+function wp_get_current_user() { return new WP_User(); }
 function wp_delete_user(...$args) {}
 function check_admin_referer(...$args) {}
 function wp_nonce_field(...$args) {}
@@ -23,10 +30,10 @@ function plugins_url(...$args) { return 'http://example.com/'; }
 function admin_url(...$args) { return 'http://example.com/wp-admin/'; }
 
 function esc_html($string) { return $string; }
-function esc_html__($string) { return $string; }
-function esc_html_e($string) { echo $string; }
+function esc_html__($string, $domain = 'default') { return $string; }
+function esc_html_e($string, $domain = 'default') { echo $string; }
 function esc_attr($string) { return $string; }
-function esc_attr_e($string) { echo $string; }
+function esc_attr_e($string, $domain = 'default') { echo $string; }
 function esc_url($string) { return $string; }
 function esc_url_raw($string) { return $string; }
 function wp_kses($string, $allowed_html = [], $allowed_protocols = []) { return $string; }
@@ -41,22 +48,3 @@ function sanitize_text_field($text) { return $text; }
 function sanitize_textarea_field($text) { return $text; }
 function sanitize_user($username) { return $username; }
 function is_email($email) { return (bool) filter_var($email, FILTER_VALIDATE_EMAIL); }
-
-
-if (!function_exists('esc_html__')) {
-    function esc_html__($text, $domain = 'default') {
-        return $text;
-    }
-}
-
-if (!function_exists('esc_html_e')) {
-    function esc_html_e($text, $domain = 'default') {
-        echo $text;
-    }
-}
-
-if (!function_exists('wp_die')) {
-    function wp_die($message = '') {
-        exit;
-    }
-}
