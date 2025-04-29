@@ -3,6 +3,13 @@ on:
   release:
     types: [released]
 
+permissions:
+  contents: read
+  id-token: write
+  actions: read
+  deployments: write
+  packages: read
+
 jobs:
   deploy_to_wp_repository:
     name: Deploy to WP.org
