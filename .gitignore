@@ -1,4 +1,5 @@
+*.zip
+email-user-cleaner.bck.php
 reorganized_fake_users.csv
 subscriber_fake_users.csv
 tools/output.csv
-*.zip
