@@ -6,7 +6,6 @@
   <file>./</file>
 
   <!-- Ruleset -->
-  <rule ref="WordPress" />
   <rule ref="WordPress-Core" />
   <rule ref="WordPress-Docs" />
   <rule ref="WordPress-Extra" />
@@ -18,8 +17,5 @@
 
   <!-- Extensions to scan -->
   <arg name="extensions" value="php"/>
-
-  <!-- Reporting -->
   <arg name="colors"/>
-
 </ruleset>
