@@ -3,3 +3,4 @@ subscriber_fake_users.csv
 /.svn
 /tags
 tools/output.csv
+/assets
