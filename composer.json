@@ -9,6 +9,11 @@
     },
     "minimum-stability": "stable",
     "license": "GPL-2.0-or-later",
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
     "scripts": {
         "post-install-cmd": [
             "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs"
