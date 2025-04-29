@@ -22,12 +22,10 @@ jobs:
         php-version: '8.1'
 
     - name: Install dependencies
-      run: |
-        composer install --no-interaction --prefer-dist
-        composer run-script post-install-cmd
+      run: composer install --no-interaction
 
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse --memory-limit=512M
 
     - name: Run PHPCS (WordPress Coding Standards)
-      run: vendor/bin/phpcs
+      run: vendor/bin/phpcs -s
