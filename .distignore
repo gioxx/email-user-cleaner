@@ -4,7 +4,10 @@
 /.git
 /.github
 /tools
+composer.json
 DEPLOY.md
 LICENSE
+phpcs.xml
+phpstan.neon
 reorganized_fake_users.csv
 subscriber_fake_users.csv

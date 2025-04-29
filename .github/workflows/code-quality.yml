@@ -1,0 +1,30 @@
+name: PHP Quality Tools
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  code_quality:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+
+    - name: Install dependencies
+      run: |
+        composer install --no-interaction --prefer-dist
+        composer run-script post-install-cmd
+
+    - name: Run PHPStan
+      run: vendor/bin/phpstan analyse --memory-limit=512M
+
+    - name: Run PHPCS (WordPress Coding Standards)
+      run: vendor/bin/phpcs

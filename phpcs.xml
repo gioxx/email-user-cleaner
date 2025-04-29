@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ruleset name="Email User Cleaner – WordPress Standards">
+  <description>WordPress Coding Standards for Plugin</description>
+
+  <!-- Paths to scan -->
+  <file>./</file>
+
+  <!-- Ruleset -->
+  <rule ref="WordPress" />
+  <rule ref="WordPress-Core" />
+  <rule ref="WordPress-Docs" />
+  <rule ref="WordPress-Extra" />
+
+  <!-- Exclude folders -->
+  <exclude-pattern>.wordpress-org/*</exclude-pattern>
+  <exclude-pattern>.github/*</exclude-pattern>
+  <exclude-pattern>tools/*</exclude-pattern>
+
+  <!-- Extensions to scan -->
+  <arg name="extensions" value="php"/>
+
+  <!-- Reporting -->
+  <arg name="colors"/>
+  <arg name="show-sniff-names"/>
+
+</ruleset>
