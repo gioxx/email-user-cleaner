@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   code_quality:
@@ -27,17 +27,14 @@ jobs:
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse --memory-limit=512M
 
-    - name: Run PHPCBF (fix coding standards)
+    - name: Run PHPCBF (auto-fix)
       run: vendor/bin/phpcbf --ignore=vendor/*
 
-    - name: Commit and Push if PHP Code Beautifier made changes
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        if [[ `git status --porcelain` ]]; then
-          git add .
-          git commit -m "Fix coding style issues via phpcbf"
-          git push
-        else
-          echo "No changes to commit."
-        fi
+    - name: Generate PHPCS HTML Report
+      run: vendor/bin/phpcs --report=full --report-file=phpcs-report.html --ignore=vendor/*
+
+    - name: Upload PHPCS HTML report
+      uses: actions/upload-artifact@v4
+      with:
+        name: phpcs-report
+        path: phpcs-report.html
