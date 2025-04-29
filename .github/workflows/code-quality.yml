@@ -28,7 +28,7 @@ jobs:
       run: vendor/bin/phpstan analyse --memory-limit=512M
 
     - name: Run PHPCBF (fix coding standards)
-      run: vendor/bin/phpcbf
+      run: vendor/bin/phpcbf --ignore=vendor/*
 
     - name: Commit and Push if PHP Code Beautifier made changes
       run: |
