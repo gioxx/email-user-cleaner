@@ -68,10 +68,10 @@ function euc_render_footer(): void {
 	?>
 	<div class="footer" style="padding-top: 35px;">
 		<hr>
-		<span class="dashicons dashicons-hammer"></span> Gioxx, <?php echo esc_html( gmdate( 'Y' ) ); ?> &#x2022; 
-		<span class="dashicons dashicons-admin-home"></span> 
+		<span class="dashicons dashicons-superhero"></span> Gioxx, <?php echo esc_html( gmdate( 'Y' ) ); ?> &#x2022; 
+		<span class="dashicons dashicons-wordpress"></span> 
 		<a href="<?php echo esc_url( 'https://go.gioxx.org/emailusercleaner' ); ?>">Gioxx.org</a> &#x2022; 
-		<span class="dashicons dashicons-media-code"></span> 
+		<span class="dashicons dashicons-heart"></span> 
 		<a href="<?php echo esc_url( 'https://github.com/gioxx/email-user-cleaner' ); ?>">GitHub</a>
 	</div>
 	<?php
