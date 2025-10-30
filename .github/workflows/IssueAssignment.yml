@@ -1,19 +1,25 @@
-name: Issue assignment
+name: Issue & PR assignment
 
 on:
-    issues:
-        types: [opened]
+  issues:
+    types: [opened]
+  # Reminder: 'pull_request' is for same-repo PRs; switch to 'pull_request_target' to handle PRs from forks/Dependabot.
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
 
 permissions:
   contents: read
+  issues: write # assign issues
+  pull-requests: write # assign PRs
 
 jobs:
-    auto-assign:
-        runs-on: ubuntu-latest
-        steps:
-            - name: 'Auto-assign issue'
-              uses: pozil/auto-assign-issue@v2.2.0
-              with:
-                  assignees: gioxx
-                  numOfAssignee: 1
-                  allowSelfAssign: true
+  auto-assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-assign issue/PR
+        uses: pozil/auto-assign-issue@v2.2.0
+        with:
+          # Reminder: can use also for multiple users, with weights (e.g., "gioxx:3,otheruser:1")
+          assignees: gioxx
+          numOfAssignee: 1
+          allowSelfAssign: true
