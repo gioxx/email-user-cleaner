@@ -40,7 +40,7 @@ jobs:
         cd ..
 
     - name: Upload Fixed PHP Files
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: fixed-php
         path: fixed-php.zip
@@ -54,7 +54,7 @@ jobs:
       run: php .github/phpcs-html-report-generator.php
 
     - name: Upload PHPCS HTML report
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: phpcs-report
         path: phpcs-report.html
