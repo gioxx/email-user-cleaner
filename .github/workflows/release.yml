@@ -41,7 +41,7 @@ jobs:
           STAGING="/tmp/$SLUG"
           rm -rf "$STAGING"
           mkdir -p "$STAGING"
-          git ls-files \
+          git -c core.quotepath=off ls-files \
             | grep -v '^\.github/' \
             | grep -v '^\.gitignore$' \
             | grep -v '^\.distignore$' \
