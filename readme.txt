@@ -3,9 +3,9 @@ Contributors: gioxx
 Tags: maintenance, email, user, cleaning, csv
 Donate link: https://ko-fi.com/gioxx
 Requires at least: 6.0
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,11 @@ Install the plugin and activate it. You will find the E-mail User Cleaner entry 
 4. The plugin reports that the user corresponding to the administrator's e-mail address has not been deleted for security reasons.
 
 == Changelog ==
+= 1.7.2 =
+* Updated compatibility with WordPress 7.0 (tested up to 7.0.2).
+* Added an `ABSPATH` guard to prevent direct file access.
+* Added GitHub Updater headers (`GitHub Plugin URI`, `GitHub Branch`, `Release Asset: true`) so the plugin can also be kept up to date via Git Updater, downloading the clean release zip from GitHub Releases.
+
 = 1.7.1 =
 * Updated compatibility with WordPress 6.8.
 * Added DEPLOY.md to this repository (to make life easier for those who need to release an update on GitHub and then SVN WordPress).

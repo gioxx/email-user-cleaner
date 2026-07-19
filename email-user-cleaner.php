@@ -19,7 +19,15 @@
  * Text Domain:       email-user-cleaner
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * GitHub Plugin URI: gioxx/email-user-cleaner
+ * GitHub Branch:     main
+ * Release Asset:     true
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Add the plugin to the WordPress admin menu.

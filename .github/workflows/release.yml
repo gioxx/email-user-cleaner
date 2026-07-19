@@ -1,0 +1,82 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - email-user-cleaner.php
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Read plugin version
+        id: version
+        run: |
+          VERSION=$(grep -m1 '^ \* Version:' email-user-cleaner.php | sed -E 's/.*Version:\s*//')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check whether this version was already released
+        id: check
+        run: |
+          if git ls-remote --tags origin | grep -q "refs/tags/${{ steps.version.outputs.tag }}$"; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build plugin zip
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          SLUG=email-user-cleaner
+          STAGING="/tmp/$SLUG"
+          rm -rf "$STAGING"
+          mkdir -p "$STAGING"
+          git ls-files \
+            | grep -v '^\.github/' \
+            | grep -v '^\.gitignore$' \
+            | grep -v '^\.distignore$' \
+            | grep -v '^\.phpcs\.xml\.dist$' \
+            | grep -v '^phpcs\.xml$' \
+            | grep -v '^phpstan' \
+            | grep -v '^composer\.json$' \
+            | grep -v '^DEPLOY\.md$' \
+            | grep -v '^tools/' \
+            | grep -v '^\.wordpress-org/' \
+            | rsync -a --files-from=- . "$STAGING/"
+          cd /tmp
+          zip -r -q "$SLUG-${{ steps.version.outputs.version }}.zip" "$SLUG"
+
+      - name: Extract changelog section
+        if: steps.check.outputs.exists == 'false'
+        id: notes
+        run: |
+          awk '/^= ${{ steps.version.outputs.version }} =/{flag=1; next} /^= /{flag=0} flag' readme.txt > /tmp/release-notes.md
+          if [ ! -s /tmp/release-notes.md ]; then
+            echo "See readme.txt." > /tmp/release-notes.md
+          fi
+
+      - name: Create tag
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          git tag "${{ steps.version.outputs.tag }}"
+          git push origin "${{ steps.version.outputs.tag }}"
+
+      - name: Create GitHub release
+        if: steps.check.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            "/tmp/email-user-cleaner-${{ steps.version.outputs.version }}.zip" \
+            --title "${{ steps.version.outputs.tag }}" \
+            --notes-file /tmp/release-notes.md
