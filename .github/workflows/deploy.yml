@@ -2,6 +2,11 @@ name: Deploy to WordPress.org Repository
 on:
   release:
     types: [released]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to deploy (e.g. 1.7.2)'
+        required: true
 
 permissions:
   contents: read
@@ -17,6 +22,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v7
+      with:
+        ref: ${{ inputs.tag || github.ref }}
     - name: WordPress Plugin Deploy
       id: deploy
       uses: 10up/action-wordpress-plugin-deploy@2.3.0
