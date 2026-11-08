@@ -80,3 +80,101 @@ GSolone, 2024
     margin-right: 10px;
     vertical-align: top;
 }
+
+/* Footer: plugin card and gallery invitation side by side, trademark notice below. */
+.euc-footer {
+	max-width: 960px;
+	margin-top: 32px;
+	padding-top: 24px;
+	border-top: 1px solid #dcdcde;
+}
+
+.euc-footer__cards {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+}
+
+.euc-footer__card {
+	display: flex;
+	align-items: stretch;
+	gap: 14px;
+	box-sizing: border-box;
+	padding: 18px 20px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+}
+
+.euc-footer__badge {
+	display: flex;
+	flex: 0 0 auto;
+	align-self: flex-start;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: rgba(41, 94, 227, 0.1);
+}
+
+.euc-footer__logo {
+	flex: 0 0 auto;
+	align-self: flex-start;
+	width: 40px;
+	height: 40px;
+}
+
+.euc-footer__body {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.euc-footer__eyebrow {
+	margin: 0 0 2px;
+	color: #295ee3;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	font-size: 11px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.euc-footer__title {
+	margin: 0 0 4px;
+	padding: 0;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.euc-footer__text {
+	margin: 0;
+	color: #646970;
+}
+
+.euc-footer__text + .euc-footer__text {
+	margin-top: 4px;
+}
+
+.euc-footer__text:last-of-type {
+	margin-bottom: 12px;
+}
+
+.euc-footer__action {
+	align-self: flex-start;
+	margin-top: auto !important;
+}
+
+.euc-footer .euc-trademark-notice {
+	margin: 16px 0 0;
+	color: #646970;
+	font-size: 11px;
+	line-height: 1.5;
+}
+
+@media screen and (max-width: 782px) {
+	.euc-footer__cards {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
