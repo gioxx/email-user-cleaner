@@ -67,20 +67,77 @@ function euc_enqueue_styles(): void {
 add_action( 'admin_enqueue_scripts', 'euc_enqueue_styles' );
 
 /**
- * Renders the footer section for the E-mail User Cleaner plugin admin page.
+ * Links under the plugin description on the Plugins screen: the GitHub
+ * repository (unless the row already links to it) and the author's gallery.
  *
- * This footer includes styled dashicons, the current year, and links to Gioxx.org
- * and the plugin's GitHub repository.
+ * @param string[] $links Row meta links.
+ * @param string   $file  Plugin basename of the row.
+ * @return string[]
+ */
+function euc_plugin_row_meta( $links, $file ) {
+	if ( plugin_basename( __FILE__ ) !== $file ) {
+		return $links;
+	}
+	if ( false === strpos( implode( ' ', (array) $links ), 'https://github.com/gioxx/email-user-cleaner' ) ) {
+		$links[] = '<a href="https://github.com/gioxx/email-user-cleaner" target="_blank" rel="noopener noreferrer">' . esc_html__( 'View on GitHub', 'email-user-cleaner' ) . '</a>';
+	}
+	$links[] = '<a href="https://wordpress.gioxx.org/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'More plugins by Gioxx', 'email-user-cleaner' ) . '</a>';
+
+	return $links;
+}
+add_filter( 'plugin_row_meta', 'euc_plugin_row_meta', 10, 2 );
+
+/**
+ * Renders the footer of the plugin admin page: the plugin card next to an
+ * invitation to the author's plugin gallery, with the trademark notice below.
  */
 function euc_render_footer(): void {
 	?>
-	<div class="footer" style="padding-top: 35px;">
-		<hr>
-		<span class="dashicons dashicons-superhero"></span> Gioxx, <?php echo esc_html( gmdate( 'Y' ) ); ?> &#x2022; 
-		<span class="dashicons dashicons-wordpress"></span> 
-		<a href="<?php echo esc_url( 'https://go.gioxx.org/emailusercleaner' ); ?>">Gioxx.org</a> &#x2022; 
-		<span class="dashicons dashicons-heart"></span> 
-		<a href="<?php echo esc_url( 'https://github.com/gioxx/email-user-cleaner' ); ?>">GitHub</a>
+<div class="euc-footer">
+		<div class="euc-footer__cards">
+			<div class="euc-footer__card euc-footer__card--plugin">
+				<span class="euc-footer__badge"><img src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'assets/images/plugin-icon.svg' ); ?>" width="20" height="20" alt=""></span>
+				<div class="euc-footer__body">
+					<p class="euc-footer__eyebrow">
+						<?php
+						/* translators: %s: plugin version number */
+						printf( esc_html__( 'Version %s', 'email-user-cleaner' ), esc_html( get_file_data( __FILE__, array( 'Version' => 'Version' ) )['Version'] ) );
+						?>
+					</p>
+					<h2 class="euc-footer__title">E-mail User Cleaner</h2>
+					<p class="euc-footer__text"><?php esc_html_e( 'Export, review and delete WordPress users by email, including duplicate detection.', 'email-user-cleaner' ); ?></p>
+					<p class="euc-footer__text">
+						<?php
+						printf(
+							/* translators: 1: link to the author's site, 2: link to the plugin repository */
+							esc_html__( 'Made by %1$s. Source code on %2$s.', 'email-user-cleaner' ),
+							'<a href="https://gioxx.org" target="_blank" rel="noopener noreferrer">Gioxx</a>',
+							'<a href="https://github.com/gioxx/email-user-cleaner" target="_blank" rel="noopener noreferrer">GitHub</a>'
+						);
+						?>
+					</p>
+					<a class="button euc-footer__action" href="https://github.com/gioxx/email-user-cleaner" target="_blank" rel="noopener noreferrer">
+						<?php esc_html_e( 'View on GitHub', 'email-user-cleaner' ); ?>
+						<span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'email-user-cleaner' ); ?></span>
+					</a>
+				</div>
+			</div>
+			<div class="euc-footer__card euc-footer__card--gallery">
+				<img class="euc-footer__logo" src="<?php echo esc_url( plugin_dir_url( __FILE__ ) . 'assets/images/gioxx-plugins.svg' ); ?>" width="40" height="40" alt="">
+				<div class="euc-footer__body">
+					<p class="euc-footer__eyebrow">gioxx/WordPress</p>
+					<h2 class="euc-footer__title"><?php esc_html_e( 'Discover more plugins by Gioxx', 'email-user-cleaner' ); ?></h2>
+					<p class="euc-footer__text"><?php esc_html_e( 'A curated collection of open-source plugins for security, analytics, performance and integrations.', 'email-user-cleaner' ); ?></p>
+					<a class="button euc-footer__action" href="https://wordpress.gioxx.org/" target="_blank" rel="noopener noreferrer">
+						<?php esc_html_e( 'Browse the plugins', 'email-user-cleaner' ); ?>
+						<span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'email-user-cleaner' ); ?></span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<p class="description euc-trademark-notice">
+			<?php esc_html_e( 'All trademarks mentioned are the property of their respective owners. Third-party trademarks, product names, trade names, corporate names and companies mentioned may be trademarks of their respective owners or registered trademarks of other companies and have been used for explanatory purposes only and for the benefit of the owner, without any intent to infringe existing copyright.', 'email-user-cleaner' ); ?>
+		</p>
 	</div>
 	<?php
 }
