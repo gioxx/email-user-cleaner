@@ -81,7 +81,7 @@ function euc_plugin_row_meta( $links, $file ) {
 	if ( false === strpos( implode( ' ', (array) $links ), 'https://github.com/gioxx/email-user-cleaner' ) ) {
 		$links[] = '<a href="https://github.com/gioxx/email-user-cleaner" target="_blank" rel="noopener noreferrer">' . esc_html__( 'View on GitHub', 'email-user-cleaner' ) . '</a>';
 	}
-	$links[] = '<a href="https://wordpress.gioxx.org/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'More plugins by Gioxx', 'email-user-cleaner' ) . '</a>';
+	$links[] = '<a href="https://wordpress.gxware.org/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'More plugins by Gioxx', 'email-user-cleaner' ) . '</a>';
 
 	return $links;
 }
@@ -128,7 +128,7 @@ function euc_render_footer(): void {
 					<p class="euc-footer__eyebrow">gioxx/WordPress</p>
 					<h2 class="euc-footer__title"><?php esc_html_e( 'Discover more plugins by Gioxx', 'email-user-cleaner' ); ?></h2>
 					<p class="euc-footer__text"><?php esc_html_e( 'A curated collection of open-source plugins for security, analytics, performance and integrations.', 'email-user-cleaner' ); ?></p>
-					<a class="button euc-footer__action" href="https://wordpress.gioxx.org/" target="_blank" rel="noopener noreferrer">
+					<a class="button euc-footer__action" href="https://wordpress.gxware.org/" target="_blank" rel="noopener noreferrer">
 						<?php esc_html_e( 'Browse the plugins', 'email-user-cleaner' ); ?>
 						<span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'email-user-cleaner' ); ?></span>
 					</a>
